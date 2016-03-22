@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320172613) do
+ActiveRecord::Schema.define(version: 20160322182729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
   create_table "collections", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
     t.integer  "user_id"
     t.boolean  "public",     default: true
     t.datetime "created_at",                null: false
@@ -25,7 +26,7 @@ ActiveRecord::Schema.define(version: 20160320172613) do
   end
 
   create_table "pictures", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.integer  "collection_id"
+    t.uuid     "collection_id"
     t.string   "file"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -49,4 +50,6 @@ ActiveRecord::Schema.define(version: 20160320172613) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "collections", "users", name: "collections_user_id_fk", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "pictures", "collections", name: "pictures_collection_id_fk", on_update: :cascade, on_delete: :cascade
 end

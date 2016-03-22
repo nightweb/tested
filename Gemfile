@@ -50,3 +50,7 @@ gem 'devise'
 
 gem 'carrierwave'
 gem 'rmagick'
+
+gem 'immigrant'
+
+gem 'bootswatch-rails'
