@@ -10,6 +10,12 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require devise_bootstrap_views_less
  *= require_tree .
  *= require_self
  */
+
+body{
+  padding-top: 80px;
+}
+
