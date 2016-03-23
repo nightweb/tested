@@ -1,0 +1,10 @@
+= form_for [@collection, @picture] do |f|
+  .form-group
+    = f.label :collection_id, :class => 'control-label'
+    = f.text_field :collection_id, :class => 'form-control'
+  .form-group
+    = f.label :file, :class => 'control-label'
+    = f.text_field :file, :class => 'form-control'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), collection_pictures_path(@collection), :class => 'btn'

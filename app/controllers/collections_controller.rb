@@ -13,6 +13,7 @@ class CollectionsController < ApplicationController
   # GET /collections/1.json
   def show
     @collection ||= Collection.shareds.find(params[:id])
+    fail ActiveRecord::RecordNotFound if @collection.nil?
   end
 
   # GET /collections/new
@@ -67,13 +68,14 @@ class CollectionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_collection
-      @collection = current_user.collections.find(params[:id]) if current_user
+      @collection = current_user.collections.find_by(id: params[:id]) if current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collection_params
       params.require(:collection).permit(:name, :public)
     end
+
     def record_not_found
       flash[:default] = "Collection not exists or not is public."
       redirect_to current_user ? collections_path : '/'
